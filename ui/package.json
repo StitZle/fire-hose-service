@@ -6,11 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check-prettier": "prettier -c .",
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,scss,yml}\""
   },
   "dependencies": {
+    "@auth0/auth0-react": "^1.12.0",
+    "@emotion/react": "^11.10.5",
+    "@mantine/core": "^5.9.2",
+    "@mantine/dates": "^5.9.2",
+    "@mantine/hooks": "^5.9.2",
+    "@tabler/icons": "^1.115.0",
+    "dayjs": "^1.11.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
+    "react-router-dom": "^6.4.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",

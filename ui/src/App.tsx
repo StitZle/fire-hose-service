@@ -1,34 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, {useState} from 'react'
+import {ColorScheme, ColorSchemeProvider, createStyles, MantineProvider} from "@mantine/core";
+import {BASE_PATH} from "./router/navigationPaths";
+import {Auth0Provider} from "@auth0/auth0-react";
+import authJson from "./auth_config.json";
+import {BrowserRouter} from "react-router-dom";
+import Layout from "./components/layout/Layout";
+
+const useStyles = createStyles((theme) => ({}));
 
 function App() {
-  const [count, setCount] = useState(0)
+    const { classes } = useStyles();
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+
+    //https://mantine.dev/guides/dark-theme/#colorschemeprovider
+    //const preferredColorScheme = useColorScheme();
+    const [colorScheme, setColorScheme] = useState<ColorScheme>("dark")
+    const toggleColorScheme = (value?: ColorScheme) => {
+        setColorScheme(value || (colorScheme === "light" ? "dark" : "light"));
+    }
+
+    const authConfig = {
+        domain: authJson.domain,
+        clientId: authJson.clientId,
+        audience: authJson.audience,
+        redirectUri: window.location.href,
+    };
+
+
+    return (
+        <React.StrictMode>
+            <Auth0Provider {...authConfig}>
+                <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                    <MantineProvider theme={{colorScheme}} withGlobalStyles withNormalizeCSS>
+                        <BrowserRouter basename={BASE_PATH}>
+                            <Layout/>
+                        </BrowserRouter>
+                    </MantineProvider>
+                </ColorSchemeProvider>
+            </Auth0Provider>
+        </React.StrictMode>
+    );
 }
 
 export default App
