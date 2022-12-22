@@ -1,4 +1,4 @@
-package com.nibucloud.frontendservice.security;
+package com.nibucloud.adminservice.security;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,15 +26,13 @@ public class SecurityConfig {
     @Value( "${spring.security.oauth2.resourceserver.jwt.issuer-uri}" )
     private String issuer;
 
-
+    @Bean
     JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)JwtDecoders.fromOidcIssuerLocation( issuer );
 
         OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator( audience );
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer( issuer );
-        OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<Jwt>( withIssuer, audienceValidator, new TenantAccessValidator() );
-
-
+        OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<Jwt>( withIssuer, audienceValidator );
 
         jwtDecoder.setJwtValidator( withAudience );
         return jwtDecoder;
@@ -52,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers( "/v1/**" )
                         .authenticated()
                 )
-                .oauth2ResourceServer().jwt().decoder( jwtDecoder() );
+                .oauth2ResourceServer().jwt();
         //@formatter:on
         return httpSecurity.build();
     }

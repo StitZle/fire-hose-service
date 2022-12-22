@@ -1,4 +1,4 @@
-package com.nibucloud.frontendservice.security;
+package com.nibucloud.adminservice.security;
 
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
@@ -18,7 +18,6 @@ public class AudienceValidator implements OAuth2TokenValidator<Jwt> {
         OAuth2Error oAuth2Error = new OAuth2Error( "invalid_token", "The required audience is null", null );
 
         if( token.getAudience().contains( audience ) ){
-            System.out.println(token);
             return OAuth2TokenValidatorResult.success();
         }
         return OAuth2TokenValidatorResult.failure( oAuth2Error );

@@ -11,6 +11,8 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import com.nibucloud.common.tenant.Tenant;
+import com.nibucloud.common.tenant.TenantAliasNotFoundException;
 import com.nibucloud.frontendservice.filter.TenantContext;
 
 
@@ -31,7 +33,7 @@ public class MongoDataSources {
 
     @Bean
     public MongoClient getMongoClient(){
-        MongoCredential credential = MongoCredential.createCredential("admin", "unused", "admin".toCharArray());
+        MongoCredential credential = MongoCredential.createCredential("unused", "unused", "unused".toCharArray());
         return MongoClients.create(MongoClientSettings.builder()
                 .applyToClusterSettings(builder ->
                         builder.hosts(Collections.singletonList(new ServerAddress("localhost", 27017))))
@@ -47,6 +49,7 @@ public class MongoDataSources {
 
         MongoCredential mongoCredential = MongoCredential.createCredential( tenant.getUsername(), tenant.getDbName(),
                 tenant.getPassword().toCharArray() );
+
         MongoClient mongoClient = MongoClients.create( MongoClientSettings.builder()
                 .applyToClusterSettings( builder -> builder.hosts(
                         Collections.singletonList( new ServerAddress( tenant.getHost(), tenant.getPort() ) ) ) )

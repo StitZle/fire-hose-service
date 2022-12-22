@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import com.nibucloud.common.tenant.TenantAliasNotFoundException;
 
 
 @Configuration
@@ -16,8 +17,8 @@ public class MultiTenantMongoDBFactory extends SimpleMongoClientDatabaseFactory 
     private MongoDataSources mongoDataSources;
 
 
-    public MultiTenantMongoDBFactory( @Qualifier("getMongoClient") MongoClient mongoClient, String databseName ) {
-        super( mongoClient, databseName );
+    public MultiTenantMongoDBFactory( @Qualifier("getMongoClient") MongoClient mongoClient, String databaseName ) {
+        super( mongoClient, databaseName );
     }
 
     @Override

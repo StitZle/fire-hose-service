@@ -7,7 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.WebRequestInterceptor;
 
-import com.nibucloud.frontendservice.multitenancy.TenantAliasNotFoundException;
+import com.nibucloud.common.tenant.TenantAliasNotFoundException;
 
 
 @Component

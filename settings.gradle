@@ -1,0 +1,6 @@
+include( 'common',
+        'frontend-service',
+        'admin-service'
+)
+
+rootProject.name = "fire-hose-service"
